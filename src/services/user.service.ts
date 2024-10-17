@@ -23,10 +23,11 @@ export class UserService {
   // Crée un nouvel utilisateur
   public async createUser(
     username: string,
-    password: string,
+    password: string
   ): Promise<UserOutputDTO> {
+    const passwordBase64 = Buffer.from(password).toString("base64");
     return UserMapper.toOutputDto(
-      await User.create({ username: username, password: password }),
+      await User.create({ username: username, password: passwordBase64 })
     );
   }
 
@@ -44,7 +45,7 @@ export class UserService {
   public async updateUser(
     id: number,
     username?: string,
-    password?: string,
+    password?: string
   ): Promise<UserOutputDTO> {
     const user = await User.findByPk(id);
     if (user) {

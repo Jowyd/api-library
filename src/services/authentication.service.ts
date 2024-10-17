@@ -2,8 +2,8 @@ import { User } from "../models/user.model"; // Modèle Sequelize
 import jwt from "jsonwebtoken"; // Pour générer le JWT
 import { Buffer } from "buffer"; // Pour décoder Base64
 import { notFound } from "../error/NotFoundError";
-
-const JWT_SECRET = process.env.JWT_SECRET || "your_jwt_secret_key"; // Clé secrète pour signer le token
+import { JWT_SECRET } from "../config/env";
+import { UserRole } from "../types/auth.types";
 
 export class AuthenticationService {
   public async authenticate(
@@ -25,7 +25,16 @@ export class AuthenticationService {
     // Vérifie si le mot de passe est correct
     if (password === decodedPassword) {
       // Si l'utilisateur est authentifié, on génère un JWT
-      const token = jwt.sign({ username: user.username }, JWT_SECRET, {
+      let role;
+      if (user.username === "admin") {
+        role = UserRole.ADMIN;
+      } else if (user.username === "manager") {
+        role = UserRole.MANAGER;
+      } else {
+        role = UserRole.USER;
+      }
+
+      const token = jwt.sign({ username: user.username, role }, JWT_SECRET, {
         expiresIn: "1h",
       });
       return token;
