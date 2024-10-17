@@ -7,10 +7,7 @@ export interface UserAttributes {
   password: string;
 }
 
-export class User
-  extends Model<UserAttributes>
-  implements UserAttributes
-{
+export class User extends Model<UserAttributes> implements UserAttributes {
   public id!: number;
   public username!: string;
   public password!: string;
@@ -35,5 +32,5 @@ User.init(
   {
     sequelize,
     tableName: "User",
-  },
+  }
 );
