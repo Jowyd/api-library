@@ -3,12 +3,12 @@
   "noImplicitAdditionalProperties": "throw-on-extras",
   "controllerPathGlobs": ["src/controllers/*.ts"],
   "spec": {
-    "securityDEfinitions": {
-      "jwt": {
-        "type": "apiKey",
-        "in": "header",
-        "name": "Authorization"
-      }
+    "securityDefinitions": {
+        "jwt": {
+            "type": "apiKey",
+            "in": "header",
+            "name": "Authorization"
+        }
     },
     "outputDirectory": "public",
     "specVersion": 3
